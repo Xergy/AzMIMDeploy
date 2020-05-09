@@ -3,20 +3,6 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-# Local Only
-*_[Ls]ocal*.*
-
-# Scratchpad
-[Ss]cratchpad*.*
-
-#Terraform Files
-**/.terraform/*
-*.tfstate.backup
-*.tfstate
-terraform.tfvars
-.terraform/*
-*terraform-provider-*
-
 # User-specific files
 *.rsuser
 *.suo
