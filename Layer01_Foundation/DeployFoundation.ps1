@@ -47,7 +47,7 @@ If ($Config.AzObjectType -contains $CurrentAzObjectType) {
     $Vnets = $VNetNames | Foreach-Object {
         If( (Get-AzContext).Subscription.Id -ne $_.SubscriptionId ) { Set-Azcontext -SubscriptionId $_.SubscriptionId | Out-Null}
         $Params = $_.Params | ConvertFrom-Json
-        $_ | New-AzVirtualNetwork -AddressPrefix $Params.AddressSpace
+        $_ | New-AzVirtualNetwork -AddressPrefix $Params.AddressSpace -DnsServer $Params.DnsServer
     }
     $Vnets.Name
 } else {write-host "Skipping AzObjectType $($CurrentAzObjectType)..."}
