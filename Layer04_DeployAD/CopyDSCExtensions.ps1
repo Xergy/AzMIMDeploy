@@ -2,15 +2,11 @@
 # Resources you want to push must be available on this Authoring Machine.
 
 #Required DSC resource modules
-$moduleNames = "XWebAdministration", "xSMBShare", "cNtfsAccessControl", "OctopusDSC", "PSDSCResources", "DSCR_Font"
+$moduleNames = "xStorage","xActiveDirectory","xNetworking","xPendingReboot"
 
 #ServerList to push files to
-$Servers = "C:\temp\serverList.txt"
-$serverList = (get-content $Servers |
-    Where { $_ -notlike ";*" } | #lines that start with ';' will be considered comments
-    ForEach { $_ } |
-    select -Unique `
-)
+
+$serverList = "elpmgmtaddc01"
 
 foreach ($server in $serverList)
 {
@@ -39,3 +35,4 @@ foreach ($server in $serverList)
     }
     Remove-PSSession -Id $Session.Id
 }
+
