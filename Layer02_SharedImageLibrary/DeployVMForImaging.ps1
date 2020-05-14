@@ -1,8 +1,8 @@
 
-
-$resourceGroup = "acme-dev-eus-sigt-03-rg"
+$Index = "03"
+$resourceGroup = "acme-prod-va-sigt-$($Index)-rg"
 $location = "usgovvirginia"
-$vmName = "acmedeussigt01"
+$vmName = "acmepvaimage$($Index)"
 
 Set-Item Env:\SuppressAzurePowerShellBreakingChangeWarnings "true"
 
@@ -33,9 +33,10 @@ $vmConfig = New-AzVMConfig -VMName $vmName -VMSize Standard_D8s_v3   | `
     Set-AzVMBootDiagnostic -Disable | `
     ForEach-Object {
       $ResultVM = $_
-      $Luns = 1..15 | foreach-object {"{0:D2}" -f $_ }
+      $Luns = 0..13 | foreach-object {"{0:D2}" -f $_ }
       foreach ($Lun in $Luns) {
-        $ResultVM = Add-AzVMDataDisk -VM $ResultVM -Name "$($vmName)_DataDisk_$($Lun)" -LUN $Lun -Caching ReadWrite -DiskSizeinGB 63 -CreateOption Empty -StorageAccountType Standard_LRS
+        $ResultVM = Add-AzVMDataDisk -VM $ResultVM -Name "$($vmName)_DataDisk_$($Lun)" -LUN $Lun -Caching None -DiskSizeinGB 16 -CreateOption Empty -StorageAccountType Premium_LRS
+        # Possible StorageAccountType values include: 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS', 'UltraSSD_LRS'
       } 
       $ResultVM    
     }

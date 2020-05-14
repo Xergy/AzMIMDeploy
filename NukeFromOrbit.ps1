@@ -16,7 +16,7 @@ $elapsed = [System.Diagnostics.Stopwatch]::StartNew()
 
 $Jobs = $RGsToNuke | Remove-AzResourceGroup -force -AsJob 
 
-Write-Host "`n$(Get-Date -Format yyyy-MM-ddTHH.mm) Removing RGs, this could take a while, because it's the only way to be sure... "
+Write-Host "`n$(Get-Date -Format yyyy-MM-ddTHH.mm) This could take a while... Removing RGs - because it's the only way to be sure... "
 
 $Jobs | wait-job | Out-Null
 

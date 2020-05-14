@@ -1,4 +1,4 @@
-$SigConfigs = Import-Csv -Path ..\Naming.csv | where-object {$_.AzObjectType -eq "sig"} | out-gridview -Title "Choose SIGs to Deploy:" -OutputMode Multiple
+$SigConfigs = Import-Csv -Path ..\Naming.csv | where-object {$_.Type -eq "sig"} | out-gridview -Title "Choose SIGs to Deploy:" -OutputMode Multiple
 Set-Item Env:\SuppressAzurePowerShellBreakingChangeWarnings "true"
 
 Foreach ($SigConfig in $SigConfigs) {

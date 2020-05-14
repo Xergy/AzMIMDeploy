@@ -1,4 +1,4 @@
-$VMConfigs = Import-Csv -Path ..\Naming.csv | Where-Object {$_.AzObjectType -eq "vm" } | out-gridview -Title "Choose SIGs to Deploy:" -OutputMode Multiple
+$VMConfigs = Import-Csv -Path ..\Naming.csv | Where-Object {$_.Type -eq "vm" } | out-gridview -Title "Choose SIGs to Deploy:" -OutputMode Multiple
 Set-Item Env:\SuppressAzurePowerShellBreakingChangeWarnings "true"
 
 If ($VMConfigs -eq $Null) {Write-Host "Exiting - No Configuration..."; exit }
@@ -23,7 +23,7 @@ Foreach ($VMConfig in $VMConfigs) {
     $vnet = Get-AzVirtualNetwork -ResourceGroupName $VMConfig.ResourceGroupName -Name $Params.VNetName  
     $subnet = Get-AzVirtualNetworkSubnetConfig -Name $Params.SubnetName -VirtualNetwork $vnet
     New-AzNetworkInterface -Name "$($vmName)-nic" -ResourceGroupName $resourceGroup -Location $location `
-      -Subnet $subnet -EnableAcceleratedNetworking
+      -Subnet $subnet -EnableAcceleratedNetworking -PrivateIpAddress $Params.StaticIP
     $nic = get-AzNetworkInterface -Name "$($vmName)-nic" -ResourceGroupName $resourceGroup
     
     $imageVersionId = $Params.ImageVersionId
